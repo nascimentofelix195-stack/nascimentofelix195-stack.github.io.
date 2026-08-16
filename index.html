@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head> 
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NexaHost | Hospedagem de Bots Discord 24/7</title>
+    <meta
+      name="description"
+      content="Hospedagem profissional de bots Discord 24/7 para manter seu bot online mesmo com o PC desligado."
+    />
+    <style>
+      :root {
+        --bg: #07111f;
+        --bg-2: #0d1b2a;
+        --card: rgba(17, 25, 40, 0.85);
+        --primary: #5865f2;
+        --primary-2: #7c8cff;
+        --secondary: #00d1b2;
+        --text: #eef4ff;
+        --muted: #a9bad0;
+        --line: rgba(255, 255, 255, 0.12);
+        --success: #2dd4bf;
+        --warning: #fbbf24;
+        --shadow: 0 22px 60px rgba(10, 18, 32, 0.5);
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(88, 101, 242, 0.22), transparent 28%),
+          linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+        color: var(--text);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      .container {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(14px);
+        background: rgba(7, 17, 31, 0.72);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 80px;
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+
+      .logo-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-2));
+        display: grid;
+        place-items: center;
+        font-size: 1.1rem;
+        box-shadow: var(--shadow);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .nav-links a:hover { color: var(--text); }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        padding: 14px 22px;
+        border: 1px solid transparent;
+        font-weight: 700;
+        transition: 0.2s ease;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--primary-2));
+        color: white;
+        box-shadow: 0 12px 30px rgba(88, 101, 242, 0.4);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        border-color: var(--line);
+        color: var(--text);
+      }
+
+      .hero {
+        padding: 72px 0 36px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        align-items: center;
+        gap: 40px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(88, 101, 242, 0.12);
+        border: 1px solid rgba(124, 140, 255, 0.4);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-size: 0.8rem;
+        color: #ccd4ff;
+      }
+
+      h1 {
+        font-size: clamp(2.4rem, 4vw, 4.5rem);
+        line-height: 1.05;
+        margin: 18px 0 18px;
+        letter-spacing: -0.05em;
+      }
+
+      .hero p {
+        color: var(--muted);
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin: 0 0 28px;
+        max-width: 620px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 28px;
+      }
+
+      .mini-stats {
+        display: flex;
+        gap: 26px;
+        flex-wrap: wrap;
+      }
+
+      .mini-stats div {
+        min-width: 160px;
+      }
+
+      .mini-stats strong {
+        display: block;
+        font-size: 1.8rem;
+        margin-bottom: 4px;
+      }
+
+      .mini-stats span {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .hero-card {
+        background: linear-gradient(180deg, rgba(16, 26, 40, 0.9), rgba(12, 18, 30, 0.95));
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        padding: 24px;
+      }
+
+      .monitor {
+        background: rgba(11, 17, 26, 0.9);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      .monitor-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .dot.red { background: #ff5f57; }
+      .dot.yellow { background: #ffbd2e; }
+      .dot.green { background: #28c840; }
+
+      .monitor-body {
+        padding: 20px 18px 18px;
+      }
+
+      .status-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+        color: var(--muted);
+      }
+
+      .status-row:last-child { border-bottom: none; }
+
+      .badge {
+        padding: 7px 10px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .badge.good {
+        background: rgba(45, 212, 191, 0.12);
+        color: var(--success);
+      }
+
+      .badge.warn {
+        background: rgba(251, 191, 36, 0.12);
+        color: var(--warning);
+      }
+
+      section {
+        padding: 32px 0 26px;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 26px;
+      }
+
+      .section-header h2 {
+        font-size: clamp(2rem, 3vw, 3rem);
+        margin: 0 0 12px;
+        letter-spacing: -0.04em;
+      }
+
+      .section-header p {
+        margin: 0 auto;
+        max-width: 660px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .features,
+      .plans-grid,
+      .steps-grid,
+      .testimonials-grid,
+      .faq-list {
+        display: grid;
+        gap: 20px;
+      }
+
+      .features {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 26px 22px;
+        box-shadow: inset 0 1px rgba(255,255,255,0.02);
+      }
+
+      .icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        font-size: 1.4rem;
+        margin-bottom: 18px;
+        background: linear-gradient(135deg, rgba(88, 101, 242, 0.22), rgba(0, 209, 178, 0.16));
+        border: 1px solid rgba(124, 140, 255, 0.3);
+      }
+
+      .card h3 {
+        margin: 0 0 12px;
+        font-size: 1.2rem;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .plans-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .plan {
+        position: relative;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 28px 22px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .plan.featured {
+        border-color: rgba(124, 140, 255, 0.7);
+        box-shadow: 0 20px 45px rgba(88, 101, 242, 0.18);
+        transform: translateY(-8px);
+      }
+
+      .tag {
+        position: absolute;
+        right: 18px;
+        top: 18px;
+        background: rgba(88, 101, 242, 0.18);
+        border: 1px solid rgba(124, 140, 255, 0.5);
+        color: #dfe7ff;
+        font-size: 0.74rem;
+        padding: 7px 10px;
+        border-radius: 999px;
+      }
+
+      .plan h3 {
+        margin: 0 0 12px;
+        font-size: 1.5rem;
+      }
+
+      .price {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        margin-bottom: 18px;
+      }
+
+      .price strong {
+        font-size: 2.4rem;
+        letter-spacing: -0.05em;
+      }
+
+      .price span {
+        color: var(--muted);
+      }
+
+      .plan ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 22px;
+        display: grid;
+        gap: 12px;
+        color: var(--muted);
+      }
+
+      .plan li::before {
+        content: "✓";
+        color: var(--success);
+        margin-right: 10px;
+        font-weight: 700;
+      }
+
+      .plan .btn {
+        margin-top: auto;
+        width: 100%;
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .step {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 24px 20px;
+      }
+
+      .step-number {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        color: white;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        margin-bottom: 18px;
+      }
+
+      .step h3 {
+        margin: 0 0 12px;
+      }
+
+      .step p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .testimonial {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 22px;
+      }
+
+      .stars {
+        letter-spacing: 0.2em;
+        color: #fbbf24;
+        margin-bottom: 12px;
+      }
+
+      .testimonial p {
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .person {
+        margin-top: 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        background: linear-gradient(135deg, rgba(88, 101, 242, 0.28), rgba(0, 209, 178, 0.22));
+      }
+
+      .person small {
+        display: block;
+        color: var(--muted);
+      }
+
+      .faq-list {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .faq-item {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 20px 22px;
+      }
+
+      .faq-item h3 {
+        margin: 0;
+        font-size: 1.04rem;
+      }
+
+      .faq-item p {
+        margin: 12px 0 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .cta {
+        padding: 56px 0 90px;
+      }
+
+      .cta-box {
+        background: linear-gradient(135deg, rgba(88, 101, 242, 0.16), rgba(0, 209, 178, 0.08));
+        border: 1px solid rgba(124, 140, 255, 0.4);
+        border-radius: 28px;
+        padding: 34px 28px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .cta-box h3 {
+        margin: 0 0 8px;
+        font-size: clamp(1.7rem, 2.6vw, 2.4rem);
+        letter-spacing: -0.04em;
+      }
+
+      .cta-box p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        background: rgba(9, 15, 24, 0.7);
+      }
+
+      .footer-wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding: 22px 0;
+        color: var(--muted);
+      }
+
+      @media (max-width: 920px) {
+        .hero-grid,
+        .features,
+        .plans-grid,
+        .steps-grid,
+        .testimonials-grid,
+        .cta-box {
+          grid-template-columns: 1fr;
+          display: grid;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .cta-box {
+          text-align: center;
+          justify-items: center;
+        }
+
+        .footer-wrap {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <a href="#top" class="logo" aria-label="NexaHost home">
+          <span class="logo-mark">N</span>
+          <span>NexaHost</span>
+        </a>
+
+        <nav class="nav-links" aria-label="Navegação principal">
+          <a href="#vantagens">Vantagens</a>
+          <a href="#planos">Planos</a>
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contato">Contato</a>
+        </nav>
+
+        <a class="btn btn-primary" href="#planos">Ver planos</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">● Host 100% online</span>
+            <h1>Seu bot Discord online 24/7, mesmo com o PC desligado.</h1>
+            <p>
+              Hospedamos seus bots em servidores estáveis e monitorados 24 horas por dia,
+              para você manter o Discord sempre ativo, sem depender do seu computador.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#planos">Começar agora</a>
+              <a class="btn btn-secondary" href="#contato">Falar com suporte</a>
+            </div>
+
+            <div class="mini-stats" aria-label="Estatísticas da empresa">
+              <div>
+                <strong>99.9%</strong>
+                <span>Uptime</span>
+              </div>
+              <div>
+                <strong>24/7</strong>
+                <span>Monitoramento</span>
+              </div>
+              <div>
+                <strong>3 min</strong>
+                <span>Deploy rápido</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-card">
+            <div class="monitor">
+              <div class="monitor-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <div class="monitor-body">
+                <div class="status-row">
+                  <span>Bot principal</span>
+                  <span class="badge good">ONLINE</span>
+                </div>
+                <div class="status-row">
+                  <span>Servidor</span>
+                  <span>Brasil / São Paulo</span>
+                </div>
+                <div class="status-row">
+                  <span>Monitoria</span>
+                  <span class="badge good">Ativa</span>
+                </div>
+                <div class="status-row">
+                  <span>Tempo de atividade</span>
+                  <span>31 dias</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="vantagens">
+        <div class="container">
+          <div class="section-header">
+            <h2>Por que escolher a NexaHost?</h2>
+            <p>
+              Tecnologia de alto desempenho para deixar seu bot funcionando com estabilidade,
+              velocidade e suporte real quando você precisa.
+            </p>
+          </div>
+
+          <div class="features">
+            <article class="card">
+              <div class="icon">⚡</div>
+              <h3>Desempenho de alto nível</h3>
+              <p>Servidores otimizados para bots Discord com baixa latência e bom uso de memória.</p>
+            </article>
+
+            <article class="card">
+              <div class="icon">🛡️</div>
+              <h3>Uptime garantido</h3>
+              <p>Seu bot fica online 24 horas por dia, 7 dias por semana, mesmo quando seu PC está desligado.</p>
+            </article>
+
+            <article class="card">
+              <div class="icon">📈</div>
+              <h3>Escalabilidade</h3>
+              <p>Você pode evoluir para planos maiores conforme a demanda do seu servidor e do seu bot.</p>
+            </article>
+
+            <article class="card">
+              <div class="icon">💬</div>
+              <h3>Suporte rápido</h3>
+              <p>Equipe especializada para ajudar você com configuração, dicas e até troubleshooting.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="planos">
+        <div class="container">
+          <div class="section-header">
+            <h2>Planos para qualquer tamanho de bot</h2>
+            <p>Escolha o plano ideal para o seu servidor e aumente sua estrutura sem complicações.</p>
+          </div>
+
+          <div class="plans-grid">
+            <article class="plan">
+              <h3>Starter</h3>
+              <div class="price">
+                <strong>R$ 14</strong>
+                <span>/mês</span>
+              </div>
+              <ul>
+                <li>1 bot</li>
+                <li>1 GB de RAM</li>
+                <li>10 GB de SSD</li>
+                <li>Suporte por chat</li>
+              </ul>
+              <a class="btn btn-secondary" href="#contato">Contratar</a>
+            </article>
+
+            <article class="plan featured">
+              <span class="tag">Mais popular</span>
+              <h3>Pro</h3>
+              <div class="price">
+                <strong>R$ 29</strong>
+                <span>/mês</span>
+              </div>
+              <ul>
+                <li>3 bots</li>
+                <li>2 GB de RAM</li>
+                <li>25 GB de SSD</li>
+                <li>Monitoramento 24/7</li>
+                <li>Suporte prioritário</li>
+              </ul>
+              <a class="btn btn-primary" href="#contato">Contratar</a>
+            </article>
+
+            <article class="plan">
+              <h3>Ultra</h3>
+              <div class="price">
+                <strong>R$ 59</strong>
+                <span>/mês</span>
+              </div>
+              <ul>
+                <li>8 bots</li>
+                <li>4 GB de RAM</li>
+                <li>60 GB de SSD</li>
+                <li>Backup automático</li>
+                <li>Atendimento VIP</li>
+              </ul>
+              <a class="btn btn-secondary" href="#contato">Contratar</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="como-funciona">
+        <div class="container">
+          <div class="section-header">
+            <h2>Como funciona a hospedagem</h2>
+            <p>Instalação simples e processo rápido para você colocar seu bot no ar em poucos minutos.</p>
+          </div>
+
+          <div class="steps-grid">
+            <article class="step">
+              <div class="step-number">1</div>
+              <h3>Escolha seu plano</h3>
+              <p>Selecione a melhor opção de acordo com a quantidade de bots e os recursos necessários.</p>
+            </article>
+
+            <article class="step">
+              <div class="step-number">2</div>
+              <h3>Envie os dados</h3>
+              <p>Nos passe as informações do bot e da configuração que você deseja usar na hospedagem.</p>
+            </article>
+
+            <article class="step">
+              <div class="step-number">3</div>
+              <h3>Seu bot fica online</h3>
+              <p>Assim que a configuração estiver pronta, ele começará a funcionar 24/7 sem depender do seu computador.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="container">
+          <div class="section-header">
+            <h2>Clientes que confiam na NexaHost</h2>
+            <p>Mais de 200 servidores e bots já estão funcionando com segurança e estabilidade.</p>
+          </div>
+
+          <div class="testimonials-grid">
+            <article class="testimonial">
+              <div class="stars">★★★★★</div>
+              <p>“O meu bot ficou online 24/7 e meu servidor nunca mais ficou sem resposta. Vale muito a pena.”</p>
+              <div class="person">
+                <div class="avatar">A</div>
+                <div>
+                  <strong>Arthur</strong>
+                  <small>Administrador de servidor</small>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial">
+              <div class="stars">★★★★★</div>
+              <p>“A hospedagem foi muito simples de configurar e o suporte respondeu rápido quando precisei.”</p>
+              <div class="person">
+                <div class="avatar">L</div>
+                <div>
+                  <strong>Luiza</strong>
+                  <small>Dev de bots</small>
+                </div>
+              </div>
+            </article>
+
+            <article class="testimonial">
+              <div class="stars">★★★★★</div>
+              <p>“Antes eu tinha que deixar meu PC ligado o tempo todo. Agora o bot fica sempre ativo.”</p>
+              <div class="person">
+                <div class="avatar">R</div>
+                <div>
+                  <strong>Rafael</strong>
+                  <small>Dono de comunidade</small>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq">
+        <div class="container">
+          <div class="section-header">
+            <h2>Perguntas frequentes</h2>
+          </div>
+
+          <div class="faq-list">
+            <article class="faq-item">
+              <h3>Ele fica online mesmo com meu PC desligado?</h3>
+              <p>Sim. A hospedagem é feita em servidores externos, então seu bot continua funcionando mesmo quando o seu computador está desligado.</p>
+            </article>
+
+            <article class="faq-item">
+              <h3>Posso hospedar vários bots?</h3>
+              <p>Sim. Os planos têm diferentes limites de bots, e também é possível solicitar um plano personalizado para mais uso.</p>
+            </article>
+
+            <article class="faq-item">
+              <h3>Preciso saber programar para usar?</h3>
+              <p>Não é obrigatório. Você pode usar a hospedagem para bots já criados, e o suporte também pode te auxiliar na configuração inicial.</p>
+            </article>
+
+            <article class="faq-item">
+              <h3>Como funciona o suporte?</h3>
+              <p>Você recebe ajuda por chat ou WhatsApp em casos de configuração, erro de execução e dúvidas gerais sobre seus bots.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta" id="contato">
+        <div class="container">
+          <div class="cta-box">
+            <div>
+              <h3>Pronto para deixar seu bot online 24/7?</h3>
+              <p>Fale agora com nossa equipe e comece a proteger seu servidor com hospedagem profissional.</p>
+            </div>
+            <a class="btn btn-primary" href="" target="_blank" rel="noreferrer">Solicitar orçamento</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-wrap">
+        <div class="logo">
+          <span class="logo-mark">N</span>
+          <span>NexaHost</span>
+        </div>
+        <div>© 2026 NexaHost. Todos os direitos reservados.</div>
+      </div>
+    </footer>
+  </body>
+</html>
